@@ -9,16 +9,17 @@ CREATE table if not exists style (
 CREATE TABLE IF NOT EXISTS singer (
 	id_singer serial PRIMARY KEY,
 	name_singer TEXT NOT null,
-	name_style text not null,
-	name_album text
+
 	);
 
 -- создаем таблицу с треками
 CREATE TABLE IF NOT EXISTS track (
 	id_track serial PRIMARY KEY,
+	id_album integer references album (id_album)
 	name_album text NOT NULL,
-	time text not null,
+	time integer not null,
 	name_track text not null,
+	
 	);
 
 -- создаем таблицу с альбомами
@@ -41,18 +42,18 @@ CREATE TABLE IF NOT EXISTS collection (
 -- связь между жанром и исполнителем
 CREATE TABLE IF NOT EXISTS style_singer (
 	id serial PRIMARY KEY,
-	id_style TEXT NOT NULL REFERENCES style (id_style),
-	id_singer text not null references singer (id_singer));
+	id_style integer NOT NULL REFERENCES style (id_style),
+	id_singer integer not null references singer (id_singer));
 
 
 -- связь между альбомами и исполнителями
 CREATE TABLE IF NOT EXISTS album_singer (
 	id serial PRIMARY KEY,
-	id_album TEXT NOT NULL REFERENCES singer (id_album),
-	id_singer TEXT NOT null references singer(id_singer));
+	id_album integer NOT NULL REFERENCES singer (id_album),
+	id_singer integer NOT null references singer(id_singer));
 
 --связь песни и сборника
 CREATE TABLE IF NOT EXISTS collection_track (
 	id serial PRIMARY KEY,
-	id_collection NOT null references collection(id_collection),
-	id_track text not null references track(id_track));
+	id_collection integer NOT null references collection(id_collection),
+	id_track integer not null references track(id_track));
